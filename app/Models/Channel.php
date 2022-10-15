@@ -39,6 +39,13 @@ class Channel extends Model implements HasMedia
         return $this->belongsTo(User::class, 'owner_id');
     }
 
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('channel-images')
+            ->singleFile()
+            ->acceptsMimeTypes(['image/jpeg', 'image/gif', 'image/png']);
+    }
+
     public function registerMediaConversions(Media $media = null): void
     {
         $this
