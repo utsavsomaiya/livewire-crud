@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Channel;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -36,5 +38,16 @@ class UserFactory extends Factory
         return $this->state(fn (array $attributes) => [
             'email_verified_at' => null,
         ]);
+    }
+
+
+    public function withChannel(): static
+    {
+        return $this->afterCreating(function (User $user): void {
+                Channel::factory()->create([
+                    'owner_id' => $user->id,
+                    'name' => "{$user->name}'s Channel",
+                ]);
+        });
     }
 }
