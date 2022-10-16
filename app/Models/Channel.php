@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\ChannelStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -26,6 +27,13 @@ class Channel extends Model implements HasMedia
      * @var array<int, string>
      */
     protected $fillable = ['name', 'status', 'owner_id', 'description'];
+
+    /**
+     * @var array<string, class-string<ChannelStatus>>|array<string, string>
+     */
+    protected $casts = [
+        'status' => ChannelStatus::class,
+    ];
 
     public function getSlugOptions(): SlugOptions
     {

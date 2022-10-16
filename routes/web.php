@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Livewire\Channel;
+use App\Http\Livewire\Channel\CreateOrUpdate;
+use App\Http\Livewire\Channel\Index;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,4 +15,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', Channel::class);
+Route::get('/', Index::class)->name('channel.index');
+Route::get('/create', CreateOrUpdate::class)->name('channel.create');
+Route::get('/edit/{id}', CreateOrUpdate::class)->name('channel.edit');

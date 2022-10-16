@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\ChannelStatus;
 use App\Models\Channel;
 use App\Models\User;
 use Database\Seeders\DatabaseSeeder;
@@ -23,7 +24,7 @@ class ChannelFactory extends Factory
         return [
             'name' => ucwords(fake()->words(random_int(5, 8), true)),
             'description' => fake()->sentences(5, true),
-            'status' => 'Draft',
+            'status' => ChannelStatus::Draft->value,
             'owner_id' => fn () => User::factory()->create()->id,
         ];
     }
