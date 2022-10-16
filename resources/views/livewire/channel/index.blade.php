@@ -5,6 +5,11 @@
             Add new channel
         </a>
     </div>
+    <input
+        class="block appearance-none border border-solid border-black-20 rounded-lg focus:outline-none focus:bg-white focus:border-gray-500 px-5 py-3.5 font-normal text-sm text-black"
+        wire:model="search"
+        type="search"
+    >
     <table class="min-w-max w-full table-auto">
         <thead>
             <tr class="text-black-60 text-sm leading-normal">
@@ -47,8 +52,8 @@
             @endforeach
         </tbody>
     </table>
-</div>
-<div class="flex gap-x-96">
-    <a href="{{ $channels->previousPageUrl() }}" class="border bg-slate-500 p-2 rounded">Previous</a>
-    <a href="{{ $channels->nextPageUrl() }}" class="border bg-slate-500 p-2 rounded ml-96">Next</a>
+    <div class="gap-x-96 {{ $search ? 'hidden' : 'flex' }}">
+        <a href="{{ $channels->previousPageUrl() }}" class="border bg-slate-500 p-2 rounded">Previous</a>
+        <a href="{{ $channels->nextPageUrl() }}" class="border bg-slate-500 p-2 rounded ml-96">Next</a>
+    </div>
 </div>

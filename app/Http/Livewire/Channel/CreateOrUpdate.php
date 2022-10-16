@@ -10,7 +10,10 @@ use Livewire\Component;
 class CreateOrUpdate extends Component
 {
     public $name;
+    public $channelId;
     public $description;
+    public $channelCoverImage;
+    public $status;
     public $draft = ChannelStatus::Draft;
     public $published = ChannelStatus::Published;
     public $suspended = ChannelStatus::Suspended;
@@ -24,10 +27,12 @@ class CreateOrUpdate extends Component
     public function mount($id = null)
     {
         if ($id) {
+            $this->channelId = $id;
             $channel = Channel::find($id);
             $this->name = $channel->name;
+            $this->channelCoverImage = $channel->getFirstMediaUrl('channel-images', 'preview');
             $this->description = $channel->description;
-            $this->status = $channel->status;
+            $this->status = $channel->status->value;
         }
     }
 
@@ -37,11 +42,28 @@ class CreateOrUpdate extends Component
         $validatedData['owner_id'] = User::factory()->create()->id;
 
         Channel::create($validatedData);
+
+        session()->flash('message', 'Channel Created Successfully');
+
+        $this->resetForm();
+    }
+
+    public function resetForm()
+    {
+        $this->name = '';
+        $this->channelCoverImage = '';
+        $this->description = '';
+        $this->status = '';
     }
 
     public function updateChannel($id)
     {
+        $validatedData = $this->validate();
+        $validatedData['owner_id'] = User::factory()->create()->id;
 
+        Channel::whereId($id)->update($validatedData);
+
+        session()->flash('message', 'Channel Updated Successfully');
     }
 
     public function render()
